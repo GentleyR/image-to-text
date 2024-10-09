@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image to Text Converter</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Image to Text Converter</h1>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="image" accept="image/*" required>
+            <label for="language">Select Language:</label>
+            <select name="language" id="language">
+                <option value="eng">English</option>
+                <option value="fra">French</option>
+                <!-- Add more languages as needed -->
+                <option value="eng+fra">English + French</option>
+                <!-- For code, you might need custom handling -->
+            </select>
+            <button type="submit">Upload and Convert</button>
+        </form>
+        {% if extracted_text %}
+            <div class="result">
+                <h2>Extracted Text:</h2>
+                <textarea readonly>{{ extracted_text }}</textarea>
+                <button onclick="copyText()">Copy Text</button>
+            </div>
+        {% endif %}
+    </div>
+    
+    <script>
+        function copyText() {
+            const textarea = document.querySelector('textarea');
+            textarea.select();
+            document.execCommand('copy');
+            alert('Text copied to clipboard!');
+        }
+    </script>
+</body>
+</html>
