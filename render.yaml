@@ -2,5 +2,7 @@ services:
   - type: web
     name: image-to-text
     env: python
-    buildCommand: pip install -r requirements.txt && brew install tesseract
+    buildCommand: |
+      apt-get update && apt-get install -y tesseract-ocr libtesseract-dev
+      pip install -r requirements.txt
     startCommand: gunicorn app:app
