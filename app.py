@@ -6,6 +6,8 @@ from werkzeug.utils import secure_filename
 
 import subprocess
 
+pytesseract.pytesseract.tesseract_cmd = '/usr/bin/tesseract'
+
 def check_tesseract_installation():
     try:
         result = subprocess.run(['tesseract', '--version'], stdout=subprocess.PIPE)
@@ -66,4 +68,4 @@ def upload_image():
         return redirect(request.url)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5001)), debug=True)
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)), debug=True)
