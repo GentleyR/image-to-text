@@ -4,6 +4,17 @@ from PIL import Image
 import pytesseract
 from werkzeug.utils import secure_filename
 
+import subprocess
+
+def check_tesseract_installation():
+    try:
+        result = subprocess.run(['tesseract', '--version'], stdout=subprocess.PIPE)
+        print("Tesseract version:", result.stdout.decode('utf-8'))
+    except FileNotFoundError:
+        print("Tesseract is not installed or not in the PATH.")
+
+check_tesseract_installation()
+
 app = Flask(__name__)
 
 #configure upload folder and allowed extensions
@@ -55,4 +66,5 @@ def upload_image():
         return redirect(request.url)
 
 if __name__ == '__main__':
+    app.run(debug=True)
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
